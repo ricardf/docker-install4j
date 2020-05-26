@@ -1,0 +1,37 @@
+name: Docker Image CI
+
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the master branch
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  schedule:
+    # As well as running when we make changes we should run at least
+    # every week in order to pick up new parent images
+    - cron:  "0 0 * * 0"
+
+jobs:
+  push_to_registry:
+    name: Push Docker image to GitHub Packages
+    runs-on: ubuntu-latest
+    strategy:    
+      fail-fast: false
+      matrix:
+        install4j: [8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7]
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Push to GitHub Packages
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          add_git_labels: true
+          registry: docker.pkg.github.com
+          repository: ricardf/docker-install4j/install4j
+          tags: ${{ matrix.install4j }}
+          build_args: INSTALL4J_VERSION=${{ matrix.install4j }}
