@@ -26,8 +26,8 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PASS }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
           add_git_labels: true
-          repository: ricardf/install4j
+          repository: ${{ secrets.DOCKER_USER }}/install4j
           tags: ${{ matrix.install4j }}
           build_args: INSTALL4J_VERSION=${{ matrix.install4j }}
