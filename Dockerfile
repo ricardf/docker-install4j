@@ -1,6 +1,7 @@
-#FROM adoptopenjdk/openjdk11:debian-slim
-FROM adoptopenjdk/openjdk11:slim
-ARG INSTALL4J_VERSION=latest
+ARG IMAGE=
+ARG INSTALL4J_VERSION=
+
+FROM ${IMAGE} as parent
 SHELL ["/bin/bash", "-c"]
 ENV INSTALL4J_HOME="/opt/install4j8"
 RUN \
