@@ -1,6 +1,7 @@
 ARG IMAGE=
 ARG INSTALL4J_VERSION=
-FROM ${IMAGE}
+
+FROM ${IMAGE} as parent
 SHELL ["/bin/bash", "-c"]
 ENV INSTALL4J_HOME="/opt/install4j8"
 RUN \
