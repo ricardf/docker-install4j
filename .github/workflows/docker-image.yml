@@ -34,4 +34,4 @@ jobs:
           registry: docker.pkg.github.com
           repository: ricardf/docker-install4j/install4j
           tags: ${{ matrix.install4j }}
-          build_args: INSTALL4J_VERSION=${{ matrix.install4j }}, IMAGE_BASE=${{ matrix.imagebase }}, IMAGE_VERSION=${{ matrix.imageversion }}
+          build_args: INSTALL4J_VERSION=${{ matrix.install4j }},IMAGE=${{ matrix.imagebase }}:${{ matrix.imageversion }}
