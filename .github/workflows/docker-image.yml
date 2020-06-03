@@ -14,14 +14,14 @@ jobs:
     strategy:    
       fail-fast: false
       matrix:
-        install4j: [8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7]
-        imagebase: [adoptopenjdk/openjdk11, maven]
-        imageversion: [slim, 3.6.3-adoptopenjdk-11]
+        install4j_version: [8.0.1, 8.0.2, 8.0.3, 8.0.4, 8.0.5, 8.0.6, 8.0.7]
+        image_base: [adoptopenjdk/openjdk11, maven]
+        image_version: [slim, 3.6.3-adoptopenjdk-11]
         exclude:
-          - imagebase: adoptopenjdk/openjdk11
-            imageversion: 3.6.3-adoptopenjdk-11
-          - imagebase: maven
-            imageversion: slim
+          - image_base: adoptopenjdk/openjdk11
+            image_version: 3.6.3-adoptopenjdk-11
+          - image_base: maven
+            image_version: slim
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
@@ -33,5 +33,5 @@ jobs:
           add_git_labels: true
           registry: docker.pkg.github.com
           repository: ricardf/docker-install4j/install4j
-          tags: ${{ matrix.install4j }}
-          build_args: INSTALL4J_VERSION=${{ matrix.install4j }},IMAGE=${{ matrix.imagebase }}:${{ matrix.imageversion }}
+          tags: ${{ github.sha }}-${{ matrix.image_base }}-${{ matrix.image_version }}
+          build_args: INSTALL4J_VERSION=${{ matrix.install4j_version }},IMAGE=${{ matrix.image_base }}:${{ matrix.image_version }}
